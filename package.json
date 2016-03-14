@@ -1,0 +1,39 @@
+{
+  "name": "knockout-kompose",
+  "version": "0.0.1",
+  "description": "Functional composition helpers for knockout.",
+  "author": "Piet van Zoen <hi@pietvanzoen.com>",
+  "keywords": [
+    "lodash",
+    "knockout"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pietvanzoen/knockout-kompose"
+  },
+  "main": "dist/kompose.min.js",
+  "config": {
+    "src": "src/*.js",
+    "tests": "test/*-test.js",
+    "bin": "bin/*.js"
+  },
+  "scripts": {
+    "test": "node $npm_package_config_tests",
+    "lint": "node_modules/.bin/eslint $npm_package_config_src $npm_package_config_bin $npm_package_config_tests",
+    "lint:fix": "node_modules/.bin/eslint $npm_package_config_src $npm_package_config_bin $npm_package_config_tests --fix",
+    "build:docs": "node bin/docs.js",
+    "build:dist": "node bin/dist.js",
+    "build:all": "npm run build:docs && npm run build:dist"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "docdown": "^0.4.1",
+    "eslint": "^2.4.0",
+    "knockout": "^3.4.0",
+    "lodash": "^4.6.1",
+    "tape": "^4.5.1",
+    "tape-catch": "^1.0.4",
+    "uglify-js": "^2.6.2",
+    "uglify-save-license": "^0.4.1"
+  }
+}
