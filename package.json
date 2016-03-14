@@ -1,0 +1,24 @@
+{
+  "name": "kodash",
+  "version": "0.0.1",
+  "description": "A functional utility library for Knockout",
+  "main": "dist/kodash.min.js",
+  "scripts": {
+    "test": "node test/*.js",
+    "build-docs": "node bin/docs.js",
+    "lint": "node_modules/.bin/eslint src/*.js bin/*.js test/*.js bin/*.js",
+    "build-dist": "node bin/dist.js"
+  },
+  "author": "pietvanzoen",
+  "license": "MIT",
+  "devDependencies": {
+    "docdown": "^0.4.1",
+    "eslint": "^2.4.0",
+    "knockout": "^3.4.0",
+    "lodash": "^4.6.1",
+    "tape": "^4.5.1",
+    "tape-catch": "^1.0.4",
+    "uglify-js": "^2.6.2",
+    "uglify-save-license": "^0.4.1"
+  }
+}
