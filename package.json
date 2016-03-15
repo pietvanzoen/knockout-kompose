@@ -29,11 +29,13 @@
   "devDependencies": {
     "docdown": "^0.4.1",
     "eslint": "^2.4.0",
-    "knockout": "^3.4.0",
     "lodash": "^4.6.1",
     "tape": "^4.5.1",
     "tape-catch": "^1.0.4",
     "uglify-js": "^2.6.2",
     "uglify-save-license": "^0.4.1"
+  },
+  "dependencies": {
+    "knockout": "^3.4.0"
   }
 }
