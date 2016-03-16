@@ -1,4 +1,4 @@
-# kompose.js API documentation
+# Kompose.js v0.0.1 API Documentation
 
 <!-- div class="toc-container" -->
 
@@ -23,7 +23,7 @@
 <!-- div -->
 
 ### <a id="kp-get"></a>`kp.get(object, path, [defaultValue])`
-<a href="#kp-get">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L77 "View in source") [&#x24C9;][1]
+<a href="#kp-get">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L78 "View in source") [&#x24C9;][1]
 
 Get a value from the given `object` and `path`. Unwraps any observables
 along the path. Optionally pass a `defaultValue` if `path` is not available.
@@ -55,7 +55,7 @@ kp.get(object, 'foo.bar', 'wibble');
 <!-- div -->
 
 ### <a id="kp-matchesProperty"></a>`kp.matchesProperty(path, matchValue, [customMatcher])`
-<a href="#kp-matchesProperty">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L140 "View in source") [&#x24C9;][1]
+<a href="#kp-matchesProperty">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L141 "View in source") [&#x24C9;][1]
 
 Creates a function that tests if the value at `path` is the same as the given
 value. By default it uses `===` equality. A custom matcher function can be
@@ -95,7 +95,7 @@ kp.matchesProperty('foo', { bar: 'baz' }, _.isEqual)(obj);
 <!-- div -->
 
 ### <a id="kp-method"></a>`kp.method(path, [args])`
-<a href="#kp-method">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L162 "View in source") [&#x24C9;][1]
+<a href="#kp-method">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L163 "View in source") [&#x24C9;][1]
 
 Creates a function that invokes the method at `path` with the given `args`.
 Unwraps any observables along the path.
@@ -123,7 +123,7 @@ _.map(objects, kp.method('a.b', 2));
 <!-- div -->
 
 ### <a id="kp-property"></a>`kp.property(path)`
-<a href="#kp-property">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L107 "View in source") [&#x24C9;][1]
+<a href="#kp-property">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L108 "View in source") [&#x24C9;][1]
 
 Creates a function that returns the value at the given `path`, unwrapping
 any observables along the way.
