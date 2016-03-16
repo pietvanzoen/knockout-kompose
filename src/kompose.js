@@ -4,7 +4,7 @@
  * @version 0.0.2
  * @license MIT (http://www.opensource.org/licenses/mit-license.php)
  */
-;(function(root, factory) {
+;(function(root, factory) { //eslint-disable-line no-extra-semi
   if (typeof define === 'function' && define.amd) {
     // AMD
     define(['knockout'], factory);
