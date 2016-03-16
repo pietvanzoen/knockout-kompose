@@ -1,4 +1,10 @@
 {
+  "globals": {
+    "define": true
+  },
+  "env": {
+    "node": true
+  },
   "rules": {
     "valid-jsdoc": [2, {
       "requireReturnDescription": false,
@@ -9,6 +15,7 @@
     "no-trailing-spaces": 2,
     "quotes": [2, "single"],
     "no-unused-vars": [2, { "args": "none" }],
+    "no-undef": 2,
     "camelcase": 2,
     "semi": 2,
     "curly": 2
