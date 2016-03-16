@@ -18,12 +18,14 @@
     "bin": "bin/*.js"
   },
   "scripts": {
-    "test": "node $npm_package_config_tests",
     "lint": "node_modules/.bin/eslint $npm_package_config_src $npm_package_config_bin $npm_package_config_tests",
+    "test": "npm run lint && node $npm_package_config_tests",
     "lint:fix": "node_modules/.bin/eslint $npm_package_config_src $npm_package_config_bin $npm_package_config_tests --fix",
     "build:docs": "node bin/docs.js",
     "build:dist": "node bin/dist.js",
-    "build:all": "npm run build:docs && npm run build:dist"
+    "build:all": "npm run build:docs && npm run build:dist",
+    "preversion": "npm test",
+    "version": "npm run build:all && git add -A"
   },
   "license": "MIT",
   "devDependencies": {
