@@ -25,7 +25,8 @@
     "build:dist": "node bin/dist.js",
     "build:all": "npm run build:docs && npm run build:dist",
     "preversion": "npm test",
-    "version": "npm run build:all && git add -A"
+    "version": "npm run build:all && git add -A",
+    "publish": "git push && git push --tags"
   },
   "license": "MIT",
   "devDependencies": {
