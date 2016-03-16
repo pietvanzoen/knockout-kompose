@@ -1,4 +1,4 @@
-# Kompose.js v0.0.1 API Documentation
+# kompose.js v0.0.2 API Documentation
 
 <!-- div class="toc-container" -->
 
