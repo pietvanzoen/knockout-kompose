@@ -1,7 +1,7 @@
 Kompose
 ===
 
-[![build status](https://circleci.com/gh/pietvanzoen/knockout-kompose/tree/master.png?style=shield&circle-token=2f8da00e5b66e2fac946f1acd292315422a8119b)](https://circleci.com/gh/pietvanzoen/knockout-kompose)
+[![CircleCI branch](https://img.shields.io/circleci/project/pietvanzoen/knockout-kompose/master.svg)](https://circleci.com/gh/pietvanzoen/knockout-kompose/tree/master) [![npm](https://img.shields.io/npm/v/knockout-kompose.svg)](https://www.npmjs.com/package/knockout-kompose)
 
 Kompose makes functional composition with knockout easier by providing lodash-esk helpers that handle observables.
 
