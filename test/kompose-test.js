@@ -108,3 +108,91 @@ test('kp.method', function method(t) {
 
   t.end();
 });
+
+test('kp.computedApply', function computedApply(t) {
+
+  t.ok(ko.isPureComputed(kp.computedApply()),
+    'it returns a pure computed observable');
+
+  var name = ko.observable('Ron');
+  var nameComputed = kp.computedApply(name);
+  t.same(nameComputed(), 'Ron',
+    'it can be given an observable that is unwrapped when the computed is invoked');
+
+  name('Leslie');
+  t.same(nameComputed(), 'Leslie',
+    'it returns the latest value of the given observable');
+
+  var names = ko.observableArray(['Ronald', 'Ulysses']);
+  function joinWords(wordArray) {
+    return wordArray.join(' ');
+  }
+  var fullNameComputed = kp.computedApply(names, joinWords);
+  t.same(fullNameComputed(), 'Ronald Ulysses',
+    'it applies a given function to the unwrapped observable');
+
+  names.push('Swanson');
+  t.same(fullNameComputed(), 'Ronald Ulysses Swanson',
+    'it applies the given function to the unwrapped observable on changes');
+
+  var wordsModule = {
+    delimiter: ' ',
+    join: function (wordsArray) {
+      return wordsArray.join(this.delimiter);
+    }
+  };
+  var words = ko.observableArray(['foo', 'bar', 'baz']);
+  var sentenceComputed = kp.computedApply(words, wordsModule.join, wordsModule);
+  t.same(sentenceComputed(), 'foo bar baz',
+    'it applies the given context to the function');
+
+  t.end();
+});
+
+test('kp.computedMap', function computedMap(t) {
+
+  t.ok(ko.isPureComputed(kp.computedMap()),
+    'it returns a pure computed observable');
+
+  var numberwangs = ko.observableArray([1, 22, 7, 9]);
+  var numberwangComputed = kp.computedMap(numberwangs);
+  t.looseEqual(numberwangComputed(), [1, 22, 7, 9],
+    'it can be given an observableArray that is unwrapped when the computed is invoked');
+
+  numberwangs.push(109876567);
+  t.looseEqual(numberwangComputed(), [1, 22, 7, 9, 109876567],
+    'it returns the latest value of the given observableArray');
+
+  var nums = ko.observableArray([1, 2, 3]);
+  function double(n) {
+    return n * 2;
+  }
+  var doubleNumsComputed = kp.computedMap(nums, double);
+  t.looseEqual(doubleNumsComputed(), [2, 4, 6],
+    'it applies a given iteratee to the unwrapped observableArray');
+
+  var math = {
+    addNum: 2,
+    add: function (n) {
+      return n + this.addNum;
+    }
+  };
+  var numsAddTwoComputed = kp.computedMap(nums, math.add, math);
+  t.looseEquals(numsAddTwoComputed(), [3, 4, 5],
+    'it applies the given context to the iteratee');
+
+  var users = ko.observableArray([
+    { name: 'Jake', age: ko.observable({ years: 31, months: 5 }) },
+    { name: 'Finn', age: ko.observable({ years: 14, months: 2 }) },
+    { name: 'BMO', age: ko.observable({ years: 6, months: 11 }) }
+  ]);
+  var userAgeYearsComputed = kp.computedMap(users, 'age.years');
+  t.looseEquals(userAgeYearsComputed(), [31, 14, 6],
+    'it fetches given object properties when passed a string path as an iteratee');
+
+  var userAgeMonthsComputed = kp.computedMap(users, ['age', 'months']);
+  t.looseEquals(userAgeMonthsComputed(), [5, 2, 11],
+    'it fetches given object properties when passed a array path as an iteratee');
+
+  t.end();
+});
