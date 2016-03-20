@@ -29,6 +29,9 @@
     "build:all": "npm run build:docs && npm run build:dist",
     "preversion": "npm run lint && npm test",
     "version": "npm run build:all && git add -A",
+    "version:patch": "npm version patch -m 'Bump to v%s'",
+    "version:minor": "npm version minor -m 'Bump to v%s'",
+    "version:major": "npm version major -m 'Bump to v%s'",
     "publish": "git push && git push --tags"
   },
   "license": "MIT",
