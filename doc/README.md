@@ -1,10 +1,12 @@
-# kompose.js v0.0.2 API Documentation
+# kompose.js v0.1.0 API Documentation
 
 <!-- div class="toc-container" -->
 
 <!-- div -->
 
 ## `kp`
+* <a href="#kp-computedApply">`kp.computedApply`</a>
+* <a href="#kp-computedMap">`kp.computedMap`</a>
 * <a href="#kp-get">`kp.get`</a>
 * <a href="#kp-matchesProperty">`kp.matchesProperty`</a>
 * <a href="#kp-method">`kp.method`</a>
@@ -22,8 +24,84 @@
 
 <!-- div -->
 
+### <a id="kp-computedApply"></a>`kp.computedApply(observable, [func], [thisArg])`
+<a href="#kp-computedApply">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L213 "View in source") [&#x24C9;][1]
+
+Creates a pureComputed that unwraps and applies the given `observable` to
+the given `func`. An `owner` can be given which is set as the context for
+`func`. If `func` is not given, computed returns unwrapped `observable` value.
+
+#### Arguments
+1. `observable` *(ko.observable)*: The observable to apply. This can be any type of knockout observable.
+2. `[func]` *(Function)*: Function to receive unwrapped observable.
+3. `[thisArg]` *(Object)*: The `this` binding of `func`.
+
+#### Returns
+*(Function)*:  A pure computed observable.
+
+#### Example
+```js
+function toUpper(string) {
+  return string.toUpperCase();
+}
+var speak = ko.observable('Hello');
+var shoutComputed = kp.computedApply(speak, toUpper);
+shoutComputed()
+// => 'HELLO'
+speak('Hello world');
+shoutComputed();
+// => 'HELLO WORLD'
+```
+* * *
+
+<!-- /div -->
+
+<!-- div -->
+
+### <a id="kp-computedMap"></a>`kp.computedMap(observableArray, [iteratee], [thisArg])`
+<a href="#kp-computedMap">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L250 "View in source") [&#x24C9;][1]
+
+Creates a pureComputed that unwraps and maps the given `observableArray`
+with the given `iteratee` function. If `iteratee` is a string it is treated
+as a `kp.property` string.
+
+#### Arguments
+1. `observableArray` *(ko.observableArray)*: The observableArray to iterate over.
+2. `[iteratee]` *(Function|Array|String)*: A function to iterate with, or a string or array property path.
+3. `[thisArg]` *(Object)*: The `this` binding of `iteratee`.
+
+#### Returns
+*(Function)*:  A pure computed observable.
+
+#### Example
+```js
+function double(n) {
+  return n * n;
+}
+var nums = ko.observableArray([1, 2, 3]);
+var doubleComputed = kp.computedMap(nums, double);
+doubleComputed();
+// => [2, 4, 6]
+nums.push(4);
+doubleComputed();
+// => [2, 4, 6, 8]
+
+var users = ko.observableArray([
+  { name: 'Jake', age: ko.observable({ years: 31, months: 5 }) },
+  { name: 'Finn', age: ko.observable({ years: 14, months: 2 }) }
+]);
+var userAgeYearsComputed = kp.computedMap(users, 'age.years');
+userAgeYearsComputed();
+// => [31, 14]
+```
+* * *
+
+<!-- /div -->
+
+<!-- div -->
+
 ### <a id="kp-get"></a>`kp.get(object, path, [defaultValue])`
-<a href="#kp-get">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L78 "View in source") [&#x24C9;][1]
+<a href="#kp-get">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L96 "View in source") [&#x24C9;][1]
 
 Get a value from the given `object` and `path`. Unwraps any observables
 along the path. Optionally pass a `defaultValue` if `path` is not available.
@@ -55,7 +133,7 @@ kp.get(object, 'foo.bar', 'wibble');
 <!-- div -->
 
 ### <a id="kp-matchesProperty"></a>`kp.matchesProperty(path, matchValue, [customMatcher])`
-<a href="#kp-matchesProperty">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L141 "View in source") [&#x24C9;][1]
+<a href="#kp-matchesProperty">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L161 "View in source") [&#x24C9;][1]
 
 Creates a function that tests if the value at `path` is the same as the given
 value. By default it uses `===` equality. A custom matcher function can be
@@ -95,7 +173,7 @@ kp.matchesProperty('foo', { bar: 'baz' }, _.isEqual)(obj);
 <!-- div -->
 
 ### <a id="kp-method"></a>`kp.method(path, [args])`
-<a href="#kp-method">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L163 "View in source") [&#x24C9;][1]
+<a href="#kp-method">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L184 "View in source") [&#x24C9;][1]
 
 Creates a function that invokes the method at `path` with the given `args`.
 Unwraps any observables along the path.
@@ -123,7 +201,7 @@ _.map(objects, kp.method('a.b', 2));
 <!-- div -->
 
 ### <a id="kp-property"></a>`kp.property(path)`
-<a href="#kp-property">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L108 "View in source") [&#x24C9;][1]
+<a href="#kp-property">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L127 "View in source") [&#x24C9;][1]
 
 Creates a function that returns the value at the given `path`, unwrapping
 any observables along the way.

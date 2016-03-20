@@ -1,10 +1,10 @@
 /**
  * Kompose - Functional composition helpers for knockout
  * (c) 2016 Piet van Zoen - http://github.com/pietvanzoen/knockout-kompose
- * @version 0.0.2
+ * @version 0.1.0
  * @license MIT (http://www.opensource.org/licenses/mit-license.php)
  */
-;(function(root, factory) {
+;(function(root, factory) { //eslint-disable-line no-extra-semi
   if (typeof define === 'function' && define.amd) {
     // AMD
     define(['knockout'], factory);
@@ -52,6 +52,23 @@
     return func == null ? undefined : func.apply(object, args);
   }
 
+  /**
+   * Map `array` with `iteratee` function.
+   * @private
+   * @param {Array} array Array to map.
+   * @param {Function} iteratee Iteratee function to apply to each array value.
+   * @returns {Array} Array of mapped values.
+   */
+  function arrayMap(array, iteratee) {
+    var index = -1;
+    var length = array.length;
+    var result = Array(length);
+    while (++index < length) {
+      result[index] = iteratee(array[index], index, array);
+    }
+    return result;
+  }
+
 
   /** @namespace */
   var kp = {};
@@ -59,6 +76,7 @@
   /**
    * Get a value from the given `object` and `path`. Unwraps any observables
    * along the path. Optionally pass a `defaultValue` if `path` is not available.
+   * @static
    * @memberOf kp
    * @param {Object} object Object to query.
    * @param {Array|String} path Path in object to retrieve value from.
@@ -89,6 +107,7 @@
   /**
    * Creates a function that returns the value at the given `path`, unwrapping
    * any observables along the way.
+   * @static
    * @memberOf kp
    * @param {Array|String} path The path of the property to get.
    * @returns {Function} Returns a new function.
@@ -115,6 +134,7 @@
    * Creates a function that tests if the value at `path` is the same as the given
    * value. By default it uses `===` equality. A custom matcher function can be
    * given. Any observables along the path are unwrapped.
+   * @static
    * @memberOf kp
    * @param {Array|String} path Path in object to test.
    * @param {*} matchValue Value to match with retrieved value.
@@ -148,6 +168,7 @@
   /**
    * Creates a function that invokes the method at `path` with the given `args`.
    * Unwraps any observables along the path.
+   * @static
    * @memberOf kp
    * @param {Array|String} path The path of the method.
    * @param {...*} [args] Zero or more arguments to apply to the method.
@@ -167,11 +188,85 @@
     };
   }
 
+  /**
+   * Creates a pureComputed that unwraps and applies the given `observable` to
+   * the given `func`. An `owner` can be given which is set as the context for
+   * `func`. If `func` is not given, computed returns unwrapped `observable` value.
+   * @static
+   * @memberOf kp
+   * @param {ko.observable} observable The observable to apply. This can be any type of knockout observable.
+   * @param {Function} [func] Function to receive unwrapped observable.
+   * @param {Object} [thisArg] The `this` binding of `func`.
+   * @returns {Function} A pure computed observable.
+   * @example
+   * function toUpper(string) {
+   *   return string.toUpperCase();
+   * }
+   * var speak = ko.observable('Hello');
+   * var shoutComputed = kp.computedApply(speak, toUpper);
+   * shoutComputed()
+   * // => 'HELLO'
+   * speak('Hello world');
+   * shoutComputed();
+   * // => 'HELLO WORLD'
+   */
+  function computedApply(observable, func, thisArg) {
+    return ko.pureComputed(function () {
+      var value = ko.unwrap(observable);
+      return !func ? value : func.call(thisArg, value);
+    });
+  }
+
+  /**
+   * Creates a pureComputed that unwraps and maps the given `observableArray`
+   * with the given `iteratee` function. If `iteratee` is a string it is treated
+   * as a `kp.property` string.
+   * @static
+   * @memberOf kp
+   * @param {ko.observableArray} observableArray The observableArray to iterate over.
+   * @param {Function|Array|String} [iteratee] A function to iterate with, or a string or array property path.
+   * @param {Object} [thisArg] The `this` binding of `iteratee`.
+   * @returns {Function} A pure computed observable.
+   * @example
+   * function double(n) {
+   *   return n * n;
+   * }
+   * var nums = ko.observableArray([1, 2, 3]);
+   * var doubleComputed = kp.computedMap(nums, double);
+   * doubleComputed();
+   * // => [2, 4, 6]
+   * nums.push(4);
+   * doubleComputed();
+   * // => [2, 4, 6, 8]
+   *
+   * var users = ko.observableArray([
+   *   { name: 'Jake', age: ko.observable({ years: 31, months: 5 }) },
+   *   { name: 'Finn', age: ko.observable({ years: 14, months: 2 }) }
+   * ]);
+   * var userAgeYearsComputed = kp.computedMap(users, 'age.years');
+   * userAgeYearsComputed();
+   * // => [31, 14]
+   */
+  function computedMap(observableArray, iteratee, thisArg) {
+    var func;
+    if (typeof iteratee == 'function') {
+      func = function () { return iteratee.apply(thisArg, arguments); };
+    } else if (iteratee != null) {
+      func = property(iteratee);
+    }
+    return ko.pureComputed(function () {
+      var value = ko.unwrap(observableArray);
+      return !func ? value : arrayMap(value, func);
+    });
+  }
+
   // Map functions to kp object
   kp.get = get;
   kp.property = property;
   kp.matchesProperty = matchesProperty;
   kp.method = method;
+  kp.computedApply = computedApply;
+  kp.computedMap = computedMap;
 
   return kp;
 
