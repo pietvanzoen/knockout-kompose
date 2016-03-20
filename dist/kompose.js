@@ -1,7 +1,7 @@
 /**
  * Kompose - Functional composition helpers for knockout
  * (c) 2016 Piet van Zoen - http://github.com/pietvanzoen/knockout-kompose
- * @version 0.1.0
+ * @version 0.1.1
  * @license MIT (http://www.opensource.org/licenses/mit-license.php)
  */
 ;(function(root, factory) { //eslint-disable-line no-extra-semi
@@ -179,7 +179,7 @@
    *   { a: ko.observable({ b: function (val) { return val + 2; } }) },
    * ];
    * _.map(objects, kp.method('a.b', 2));
-   * // => [2, 4]
+   * // => [3, 4]
    */
   function method(path, args) {
     var restArgs = __slice.call(arguments, 1);
@@ -190,8 +190,8 @@
 
   /**
    * Creates a pureComputed that unwraps and applies the given `observable` to
-   * the given `func`. An `owner` can be given which is set as the context for
-   * `func`. If `func` is not given, computed returns unwrapped `observable` value.
+   * the given `func`. A `thisArg` can be given which is set as the `this` binding
+   * for `func`. If `func` is not given, computed returns unwrapped `observable` value.
    * @static
    * @memberOf kp
    * @param {ko.observable} observable The observable to apply. This can be any type of knockout observable.

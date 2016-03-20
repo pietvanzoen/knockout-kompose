@@ -1,7 +1,7 @@
 /**
  * Kompose - Functional composition helpers for knockout
  * (c) 2016 Piet van Zoen - http://github.com/pietvanzoen/knockout-kompose
- * @version 0.1.0
+ * @version 0.1.1
  * @license MIT (http://www.opensource.org/licenses/mit-license.php)
  */
 ;(function(root, factory) { //eslint-disable-line no-extra-semi

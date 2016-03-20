@@ -1,4 +1,4 @@
-# kompose.js v0.1.0 API Documentation
+# kompose.js v0.1.1 API Documentation
 
 <!-- div class="toc-container" -->
 
@@ -28,8 +28,8 @@
 <a href="#kp-computedApply">#</a> [&#x24C8;](https://github.com/pietvanzoen/knockout-kompose/blob/master/src/kompose.js#L213 "View in source") [&#x24C9;][1]
 
 Creates a pureComputed that unwraps and applies the given `observable` to
-the given `func`. An `owner` can be given which is set as the context for
-`func`. If `func` is not given, computed returns unwrapped `observable` value.
+the given `func`. A `thisArg` can be given which is set as the `this` binding
+for `func`. If `func` is not given, computed returns unwrapped `observable` value.
 
 #### Arguments
 1. `observable` *(ko.observable)*: The observable to apply. This can be any type of knockout observable.
@@ -192,7 +192,7 @@ var objects = [
   { a: ko.observable({ b: function (val) { return val + 2; } }) },
 ];
 _.map(objects, kp.method('a.b', 2));
-// => [2, 4]
+// => [3, 4]
 ```
 * * *
 
