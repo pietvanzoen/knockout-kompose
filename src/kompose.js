@@ -100,6 +100,7 @@
     var parts = toPath(path);
     var index = 0;
     var length = parts.length;
+    object = ko.unwrap(object);
     while (object && index < length) {
       object = ko.unwrap(ko.unwrap(object)[parts[index]]);
       index += 1;
