@@ -43,6 +43,13 @@ test('kp.get', function get(t) {
   t.same(kp.get(obj, 'a.toString.name'), 'toString',
     'it returns value at path for language level objects');
 
+  var obj2 = [{ a: ko.observableArray(['foo', 'bar'])}];
+  t.same(kp.get(obj2, '[0].a.[1]'), 'bar',
+    'it correctly parses array paths at beginning and end of path');
+
+  t.same(kp.get(obj, '.b....c..0..'), 2,
+    'it ignores excess periods');
+
   t.end();
 });
 
