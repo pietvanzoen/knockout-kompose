@@ -29,7 +29,10 @@
     if (typeof path === 'object') {
       return path;
     }
-    path = (path || '').replace(/\.?\[(\d+)]/g, '.$1');
+    path = (path || '').
+      replace(/\[(\d+)]/g, '.$1'). // remove braces and ensure period before indexes
+      replace(/\.+/g, '.'). // reduce multiple periods to single
+      replace(/(^\.|\.$)/g, ''); // trim left/right periods
     return path.split('.');
   }
 
