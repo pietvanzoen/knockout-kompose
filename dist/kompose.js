@@ -1,7 +1,7 @@
 /**
  * Kompose - Functional composition helpers for knockout
  * (c) 2016 Piet van Zoen - http://github.com/pietvanzoen/knockout-kompose
- * @version 0.1.1
+ * @version 0.1.2
  * @license MIT (http://www.opensource.org/licenses/mit-license.php)
  */
 ;(function(root, factory) { //eslint-disable-line no-extra-semi
@@ -29,7 +29,10 @@
     if (typeof path === 'object') {
       return path;
     }
-    path = (path || '').replace(/\.?\[(\d+)]/g, '.$1');
+    path = (path || '').
+      replace(/\[(\d+)]/g, '.$1'). // remove braces and ensure period before indexes
+      replace(/\.+/g, '.'). // reduce multiple periods to single
+      replace(/(^\.|\.$)/g, ''); // trim left/right periods
     return path.split('.');
   }
 
