@@ -1,7 +1,7 @@
 /**
  * Kompose - Functional composition helpers for knockout
  * (c) 2016 Piet van Zoen - http://github.com/pietvanzoen/knockout-kompose
- * @version 0.1.2
+ * @version 0.1.3
  * @license MIT (http://www.opensource.org/licenses/mit-license.php)
  */
 ;(function(root, factory) { //eslint-disable-line no-extra-semi
@@ -100,6 +100,7 @@
     var parts = toPath(path);
     var index = 0;
     var length = parts.length;
+    object = ko.unwrap(object);
     while (object && index < length) {
       object = ko.unwrap(ko.unwrap(object)[parts[index]]);
       index += 1;

@@ -1,6 +1,6 @@
 {
   "name": "knockout-kompose",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Functional composition helpers for knockout.",
   "author": "Piet van Zoen <hi@pietvanzoen.com>",
   "keywords": [
