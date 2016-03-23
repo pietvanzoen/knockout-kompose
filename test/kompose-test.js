@@ -50,6 +50,9 @@ test('kp.get', function get(t) {
   t.same(kp.get(obj, '.b....c..0..'), 2,
     'it ignores excess periods');
 
+  t.same(kp.get(ko.observable(null), 'foo.bar'), undefined,
+    'it is undefined if `object` is wrapped null');
+
   t.end();
 });
 
