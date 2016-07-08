@@ -1,4 +1,4 @@
-var test = require('tape-catch');
+var test = require('tape');
 var ko = require('knockout');
 var kp = require('./../src/kompose.js');
 
